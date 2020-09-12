@@ -1,0 +1,4 @@
+.list {
+    align-items: center;
+    @include flex-layout(column, flex-start);
+}

@@ -1,0 +1,20 @@
+.footer {
+    position: relative;
+    @include flex-layout(row, flex-end);
+    height: 90px;
+
+
+    .button {
+        @include flex-layout(row, center);
+        align-items: center;
+        border-radius: 50%;
+        background-color: $item-bg-color;
+        background-color: $main-color;
+        position: absolute;
+        font-size: 28px;
+        right: 0.5em;
+        bottom: 0.5em;
+        width: 2.0em;
+        height: 2.0em;
+    }
+}

@@ -1,0 +1,14 @@
+.header {
+    background-color: $main-color;
+    padding: 32px;
+    @include flex-layout(column, flex-start);
+  
+    &--controls {
+      @include flex-layout(row, space-between);
+    }
+  
+    &--time {
+      @include flex-layout(row, space-between);
+      margin-top: 32px;
+    }
+}

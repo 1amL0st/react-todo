@@ -1,3 +1,19 @@
+@mixin flex-layout($direction, $jc) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $jc;
+}
+
+$item-bg-color: rgb(244, 244, 244);
+$main-color: #46529d;
+$text-white-color: #eff0f6;
+
+@import './components/Footer/Footer.scss',
+        './components/Header/Header.scss',
+        './components/List/List.scss',
+        './components/Inbox/Inbox.scss',
+        './components/ItemTask/ItemTask.scss';
+
 * {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -6,18 +22,9 @@
   outline: none;
 }
 
-@mixin flex-layout($direction, $jc) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $jc;
-}
-
-$text-white-color: #eff0f6;
-
 .todo {
   @include flex-layout(column, flex-start);
 
-  background-color: #46529d;
   color: $text-white-color;
   position: absolute;
   top: 50%;
@@ -25,6 +32,8 @@ $text-white-color: #eff0f6;
   width: 360px;
   height: 720px;
   transform: translate(-50%, -50%);
+
+  border: solid 1px darkgray;
 
   .button {
     &.is-clicked {
@@ -35,86 +44,4 @@ $text-white-color: #eff0f6;
       cursor: pointer;
     }
   }
-}
-
-.header {
-  padding: 32px;
-  @include flex-layout(column, flex-start);
-
-  &--controls {
-    @include flex-layout(row, space-between);
-  }
-
-  &--time {
-    @include flex-layout(row, space-between);
-    margin-top: 32px;
-  }
-}
-
-.counter-btn {
-  background-color: white;
-  width: 256px;
-  height: 32px;
-}
-
-.list {
-  align-items: center;
-  @include flex-layout(column, flex-start);
-}
-
-.item-task {
-  position: relative;
-  width: 100%;
-  @include flex-layout(column, space-between);
-  padding-bottom: 4px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: gray;
-  }
-
-  &--name {
-    align-self: flex-start;
-  }
-
-  &--date {
-    align-self: flex-end;
-  }
-}
-
-.inbox {
-  height: 100%;
-  @include flex-layout(column, flex-start);
-  align-items: center;
-  padding: 0 10%;
-
-  background-color: white;
-  color: black;
-
-  .h1 {
-    align-self: flex-start;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    font-size: 18px;
-    font-weight: 500;
-  }
-
-  .list {
-    width: 100%;
-    height: 100%;
-  }
-
-  .item-task {
-    margin-top: 8px;
-  }
-}
-
-.footer {
-  margin-bottom: 0;
-  color: black;
-  background-color: yellow;
 }
