@@ -12,7 +12,8 @@ $text-white-color: #eff0f6;
 @import './components/Footer/Footer.scss',
         './components/Header/Header.scss',
         './components/Inbox/Inbox.scss',
-        './components/ItemTask/ItemTask.scss';
+        './components/ItemTask/ItemTask.scss',
+        './components/AddTaskScreen/AddTaskScreen.scss';
 
 * {
   font-family: 'Roboto', sans-serif;

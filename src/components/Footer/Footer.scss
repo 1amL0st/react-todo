@@ -1,7 +1,7 @@
 .footer {
   @include flex-layout(row, flex-end);
   position: relative;
-  height: 90px;
+  height: 0px;
 
   .button {
     @include flex-layout(row, center);
@@ -11,9 +11,19 @@
     background-color: $main-color;
     position: absolute;
     font-size: 28px;
-    right: 0.5em;
     bottom: 0.5em;
     width: 2.0em;
     height: 2.0em;
+    z-index: 10000;
+  }
+
+  .button--right {
+    @extend .button;
+    right: 0.5em;
+  }
+
+  .button--left {
+    @extend .button;
+    left: 0.5em;
   }
 }
