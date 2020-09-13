@@ -36,6 +36,9 @@ class App extends React.Component {
 
   AddTaskSubmitHandler(task) {
     this.state.tasks.push(task);
+    if (this.CurrentScreen() === this.add_task_screen) {
+      this.PopScreen();
+    }
     this.setState({tasks: this.state.tasks});
   }
 
@@ -72,8 +75,9 @@ class App extends React.Component {
         <Header></Header>
         {content}
         <Footer
-        rBtnHandler={this.FooterRBtnHandler} 
-        lBtnHandler={this.FooterLBtnHandler}>
+        rBtn = {{onClick: this.FooterRBtnHandler, isVisible: (this.CurrentScreen() === this.inbox_screen)}}
+        lBtn = {{onClick: this.FooterLBtnHandler, isVisible: (this.CurrentScreen() !== this.inbox_screen)}}
+        >
         </Footer>
       </div>
     );

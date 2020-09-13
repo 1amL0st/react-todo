@@ -40,5 +40,9 @@
       border: none;
       height: 32px;
       border-radius: 8px;
+
+      &:hover {
+          cursor: pointer;
+      }
   }
 }
