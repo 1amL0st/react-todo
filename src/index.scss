@@ -1,7 +1,8 @@
-@mixin flex-layout($direction, $jc) {
+@mixin flex-layout($direction, $jc, $align_items:"unset") {
   display: flex;
   flex-direction: $direction;
   justify-content: $jc;
+  align-items: $align_items;
 }
 
 $item-bg-color: rgb(244, 244, 244);
@@ -10,7 +11,6 @@ $text-white-color: #eff0f6;
 
 @import './components/Footer/Footer.scss',
         './components/Header/Header.scss',
-        './components/List/List.scss',
         './components/Inbox/Inbox.scss',
         './components/ItemTask/ItemTask.scss';
 
@@ -20,6 +20,7 @@ $text-white-color: #eff0f6;
   padding: 0;
   list-style: none;
   outline: none;
+  box-sizing: border-box;
 }
 
 .todo {

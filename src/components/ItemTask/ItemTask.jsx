@@ -4,8 +4,8 @@ class ItemTask extends React.Component {
     render() {
         return(
             <div className="item-task">
-                <span className="item-task--name">{this.props.taskName}</span>
-                <span className="item-task--date">{this.props.taskDate}</span>
+                <span className="item-task__name">{this.props.taskName}</span>
+                <span className="item-task__date">{this.props.taskDate}</span>
             </div>
         )
     }

@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   padding: 4px 8px;
-  
+
   font-size: 16px;
   background-color: $item-bg-color;
   border-radius: 8px;
@@ -14,11 +14,11 @@
 
   box-shadow: 0 2px 1px -1px gray;
 
-  &--name {
+  &__name {
     align-self: flex-start;
   }
 
-  &--date {
+  &__date {
     font-size: 0.8rem;
     align-self: flex-end;
   }

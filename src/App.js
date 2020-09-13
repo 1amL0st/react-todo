@@ -29,7 +29,7 @@ class App extends React.Component {
     return (
       <div className="todo">
         <Header></Header>
-        <Inbox tasks={this.state.tasks}></Inbox>
+        <Inbox tasks={this.state.tasks}></Inbox>;
         <Footer addButtonHandler={this.AddButtonHandler}>
         </Footer>
       </div>
