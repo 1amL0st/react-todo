@@ -18,8 +18,12 @@
     align-self: flex-start;
   }
 
-  &__date {
+  &__date, &__time {
     font-size: 0.8rem;
     align-self: flex-end;
+  }
+
+  &__date-time {
+    @include flex-layout(row, space-between);
   }
 }

@@ -11,8 +11,9 @@ class App extends React.Component {
 
     this.state = {
       tasks: [
-        {name: 'Say something', date: '12-09-2020'},
-        {name: 'Eat something', date: '13-09-2020'}
+        {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+        {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+        {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
       ]
     }
 
@@ -20,13 +21,22 @@ class App extends React.Component {
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
 
     this.inbox_screen = (<Inbox tasks={this.state.tasks}></Inbox>);
-    this.add_task_screen = (<AddTaskScreen></AddTaskScreen>);
+
+    this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
+    this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
 
     this.state.screen_stack = [this.inbox_screen];
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
+
+    //this.state.screen_stack.push(this.add_task_screen);
+  }
+
+  AddTaskSubmitHandler(task) {
+    this.state.tasks.push(task);
+    this.setState({tasks: this.state.tasks});
   }
 
   CurrentScreen() {

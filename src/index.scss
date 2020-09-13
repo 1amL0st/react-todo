@@ -47,3 +47,12 @@ $text-white-color: #eff0f6;
     }
   }
 }
+
+.text-input {
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  
+  background-color: $item-bg-color;
+  box-shadow: 0 0px 2px 0px gray;
+}
