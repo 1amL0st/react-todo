@@ -48,8 +48,8 @@ class Header extends React.Component {
         return (
             <header className="header">
                 <div className="header--controls">
-                    <span className="button"><FontAwesomeIcon icon={icons.faList} /></span>
-                    <span className="button"><FontAwesomeIcon icon={icons.faCog} /></span>
+                    <span className="button" title="Idk"><FontAwesomeIcon icon={icons.faList} /></span>
+                    <span className="button" title="Settings"><FontAwesomeIcon icon={icons.faCog} /></span>
                 </div>
                 <div className="header--time">
                     <span className="time--date">{this.state.current_date}</span>

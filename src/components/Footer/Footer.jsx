@@ -11,7 +11,7 @@ class Footer extends React.Component {
                 onClick={() => {this.props.lBtn.onClick()}}>
                     <FontAwesomeIcon icon={icons.faArrowLeft}></FontAwesomeIcon>
                 </span>
-                <span className="button--right" style={{visibility: (this.props.rBtn.isVisible) ? 'visible' : 'hidden'}}
+                <span className="button--right" title="Add new task" style={{visibility: (this.props.rBtn.isVisible) ? 'visible' : 'hidden'}}
                 onClick={() => {this.props.rBtn.onClick()}}>
                     <FontAwesomeIcon icon={icons.faPlus}></FontAwesomeIcon>
                 </span>
