@@ -1,10 +1,6 @@
 import React from 'react';
 
 class List extends React.Component {
-    constructor(props) {
-        super();
-    }
-
     render() {
         return(
             <ol className="list">

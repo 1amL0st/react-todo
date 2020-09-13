@@ -1,26 +1,26 @@
 .inbox {
+  @include flex-layout(column, flex-start);
+  height: 100%;
+  align-items: center;
+  padding: 0 10%;
+
+  background-color: white;
+  color: black;
+
+  .h1 {
+    align-self: flex-start;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .list {
+    width: 100%;
     height: 100%;
-    @include flex-layout(column, flex-start);
-    align-items: center;
-    padding: 0 10%;
-  
-    background-color: white;
-    color: black;
-  
-    .h1 {
-      align-self: flex-start;
-      margin-top: 8px;
-      margin-bottom: 16px;
-      font-size: 18px;
-      font-weight: 500;
-    }
-  
-    .list {
-      width: 100%;
-      height: 100%;
-    }
-  
-    .item-task {
-      margin-top: 8px;
-    }
+  }
+
+  .item-task {
+    margin-top: 8px;
+  }
 }

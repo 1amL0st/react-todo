@@ -3,10 +3,6 @@ import React from 'react';
 import ItemTask from '../ItemTask/ItemTask'
 
 class Inbox extends React.Component {
-    constructor(props) {
-        super();
-    }
-
     render() {
         return (
             <div className="inbox">

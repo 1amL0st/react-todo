@@ -1,25 +1,25 @@
 .item-task {
-    position: relative;
-    width: 100%;
-    padding: 4px 8px;
-    @include flex-layout(column, space-between);
-    
-    font-size: 16px;
-    background-color: $item-bg-color;
-    border-radius: 8px;
+  @include flex-layout(column, space-between);
+  position: relative;
+  width: 100%;
+  padding: 4px 8px;
+  
+  font-size: 16px;
+  background-color: $item-bg-color;
+  border-radius: 8px;
 
-    &:hover {
-        cursor: pointer;
-    }
-  
-    box-shadow: 0 2px 1px -1px gray;
-  
-    &--name {
-      align-self: flex-start;
-    }
-  
-    &--date {
-      font-size: 0.8rem;
-      align-self: flex-end;
-    }
+  &:hover {
+      cursor: pointer;
   }
+
+  box-shadow: 0 2px 1px -1px gray;
+
+  &--name {
+    align-self: flex-start;
+  }
+
+  &--date {
+    font-size: 0.8rem;
+    align-self: flex-end;
+  }
+}

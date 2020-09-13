@@ -33,7 +33,7 @@ class Header extends React.Component {
         let date = new Date();
         let year = date.getFullYear();
         let month = (months[date.getMonth() - 1]).slice(0, 3);
-        let day = (days[date.getDay() - 1]).slice(0, 3);
+        let day = (days[date.getDay()]).slice(0, 3);
         let date_str = `${year} ${month} ${day}`;
         this.setState({current_date: date_str});
     }
