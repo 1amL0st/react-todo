@@ -12,38 +12,34 @@ class AddTaskScreen extends React.Component {
             taskTime: "09:00"
         }
 
-        this.OnTaskNameChangeHandler = this.OnTaskNameChangeHandler.bind(this);
-        this.OnTaskDescChangeHandler = this.OnTaskDescChangeHandler.bind(this);
-        this.OnTaskDateChangeHandler = this.OnTaskDateChangeHandler.bind(this);
-        this.OnTaskTimeChangeHandler = this.OnTaskTimeChangeHandler.bind(this);
         this.OnSubmitClickHandler = this.OnSubmitClickHandler.bind(this);
+        this.OnInputChangeHandler = this.OnInputChangeHandler.bind(this);
     }
 
-    OnTaskNameChangeHandler(event) {
-        this.setState({taskName: event.target.value});
+    OnInputChangeHandler(event) {
+        this.setState({[event.target.name]: event.target.value});
     }
 
-    OnTaskDescChangeHandler(event) {
-        this.setState({taskDesc: event.target.value});
-    }
-
-    OnTaskDateChangeHandler(event) {
-        this.setState({taskDate: event.target.value});
-    }
-
-    OnTaskTimeChangeHandler(event) {
-        this.setState({taskTime: event.target.value});
+    ValidateInputs() {
+        if (this.state.taskName.length === 0) {
+            alert("You must enter task name!");
+            return false;
+        }
+        return true;
     }
 
     OnSubmitClickHandler(event) {
-        let task = this.state;
-        this.props.onSubmitHandler({
-            name: task.taskName,
-            date: task.taskDate,
-            time: task.taskTime,
-            desc: task.taskDesc
-        });
+        if (this.ValidateInputs()) {
+            let task = this.state;
+            this.props.onSubmitHandler({
+                name: task.taskName,
+                date: task.taskDate,
+                time: task.taskTime,
+                desc: task.taskDesc
+            });
+        }
         event.preventDefault();
+    
     }
 
     render() {
@@ -53,21 +49,21 @@ class AddTaskScreen extends React.Component {
                 <form>
                     <label>
                         Task name:
-                        <input className="text-input" type="text" value={this.state.taskName} placeholder="Enter task name here"
-                         onChange={this.OnTaskNameChangeHandler}></input>
+                        <input name="taskName" className="text-input" type="text" value={this.state.taskName} placeholder="Enter task name here"
+                         onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <label>
                         Task description:
-                        <textarea className="text-input" type="text" value={this.state.taskDesc} placeholder="Enter task description here"
-                         onChange={this.OnTaskDescChangeHandler}></textarea>
+                        <textarea name="taskDesc" className="text-input" type="text" value={this.state.taskDesc} placeholder="Enter task description here"
+                         onChange={this.OnInputChangeHandler}></textarea>
                     </label>
                     <label>
                         Date:
-                        <input className="text-input" type="date" value={this.state.taskDate} onChange={this.OnTaskDateChangeHandler}></input>
+                        <input name="taskDate" className="text-input" type="date" value={this.state.taskDate} onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <label>
                         Time:
-                        <input className="text-input" type="time" value={this.state.taskTime} onChange={this.OnTaskTimeChangeHandler}></input>
+                        <input name="taskTime" className="text-input" type="time" value={this.state.taskTime} onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <input className="submit" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
                 </form>
