@@ -7,7 +7,7 @@ class ItemSetting extends React.Component
         return (
             <div className="item-setting">
                 <span>{this.props.name}</span>
-                <input type="checkbox"></input>
+                <input type="checkbox" onChange={() => {this.props.onChange()}}></input>
             </div>
         )
     }
