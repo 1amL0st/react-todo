@@ -7,7 +7,7 @@ class Footer extends React.Component {
     render() {
         return (
             <div className="footer" style={{zIndex:'999999'}}>
-                <span className="button--left" style={{visibility: (this.props.lBtn.isVisible) ? 'visible' : 'hidden'}}
+                <span className="button--left" title="Back" style={{visibility: (this.props.lBtn.isVisible) ? 'visible' : 'hidden'}}
                 onClick={() => {this.props.lBtn.onClick()}}>
                     <FontAwesomeIcon icon={icons.faArrowLeft}></FontAwesomeIcon>
                 </span>

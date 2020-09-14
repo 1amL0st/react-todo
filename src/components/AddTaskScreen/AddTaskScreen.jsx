@@ -5,15 +5,37 @@ class AddTaskScreen extends React.Component {
     {
         super(props);
 
+        this.ClearState = this.ClearState.bind(this);
+        this.ClearState();
+
+        this.OnSubmitClickHandler = this.OnSubmitClickHandler.bind(this);
+        this.OnInputChangeHandler = this.OnInputChangeHandler.bind(this);
+        this.OnClearClickHandler = this.OnClearClickHandler.bind(this);
+    }
+
+    ClearState() {
         this.state = {
             taskName: "",
             taskDesc: "",
             taskDate: new Date().toLocaleDateString('en-CA'),
             taskTime: "09:00"
         }
+    }
 
-        this.OnSubmitClickHandler = this.OnSubmitClickHandler.bind(this);
-        this.OnInputChangeHandler = this.OnInputChangeHandler.bind(this);
+    OnClearClickHandler() {
+        this.ClearState();
+        this.setState(this.state);
+    }
+
+    componentWillUnmount() {
+        localStorage.setItem('addTaskScreenState', JSON.stringify(this.state));
+    }
+
+    componentDidMount() {
+        let old_state = JSON.parse(localStorage.getItem('addTaskScreenState'));
+        if (old_state) {
+            this.setState(old_state);
+        }
     }
 
     OnInputChangeHandler(event) {
@@ -39,7 +61,6 @@ class AddTaskScreen extends React.Component {
             });
         }
         event.preventDefault();
-    
     }
 
     render() {
@@ -65,7 +86,8 @@ class AddTaskScreen extends React.Component {
                         Time:
                         <input name="taskTime" className="text-input" type="time" value={this.state.taskTime} onChange={this.OnInputChangeHandler}></input>
                     </label>
-                    <input className="submit" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
+                    <input className="submit" title="Add task" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
+                    <input className="submit clear" title="Clear fields" type="button" value="Clear" onClick={this.OnClearClickHandler}></input>
                 </form>
             </div>
         )
