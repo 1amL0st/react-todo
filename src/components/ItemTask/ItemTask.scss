@@ -17,4 +17,16 @@
   &__date-time {
     @include flex-layout(row, space-between);
   }
+
+  &__desc {
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  &__desc--hidden {
+    margin-top: 0px;
+    height: 0;
+    visibility: hidden;
+  }
 }

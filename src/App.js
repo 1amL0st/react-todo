@@ -45,9 +45,6 @@ class App extends React.Component {
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
-
-    //this.state.screen_stack.push(this.add_task_screen);
-    this.state.screen_stack.push(this.settings_screen);
   }
 
   AddTaskSubmitHandler(task) {
