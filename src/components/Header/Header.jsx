@@ -8,40 +8,35 @@ class Header extends React.Component {
         super();
 
         this.state = {
-            current_date: "",
-            current_time: ""
+            curDate: this.GetCurDateStr(),
+            curTime: this.GetCurTimeStr()
         }
-
-        this.UpdateCurrentDate = this.UpdateCurrentDate.bind(this);
     }
 
-    componentDidMount() {
-        this.interval = setInterval(() => {
-            this.UpdateCurrentDate();
-            this.UpdateCurrentTime();
-        }, 1000);
+    GetCurTimeStr() {
+        return new Date().toLocaleTimeString();
     }
 
-    componentWillUnmount() {
-        console.log('Will unmount!');
-        clearInterval(this.interval);
-    }
-
-    UpdateCurrentDate() {
+    GetCurDateStr() {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const months  = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let date = new Date();
         let year = date.getFullYear();
         let month = (months[date.getMonth() - 1]).slice(0, 3);
         let day = (days[date.getDay()]).slice(0, 3);
-        let date_str = `${year} ${month} ${day}`;
-        this.setState({current_date: date_str});
+        return `${year} ${month} ${day}`;
     }
 
-    UpdateCurrentTime() {
-        let date = new Date();
-        let time_str = date.toLocaleTimeString();
-        this.setState({current_time: time_str});
+    componentDidMount() {
+        this.interval = setInterval(() => {
+            this.setState({curDate: this.GetCurDateStr()});
+            this.setState({curTime: this.GetCurTimeStr()});
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        console.log('Will unmount!');
+        clearInterval(this.interval);
     }
 
     render() {
@@ -53,8 +48,8 @@ class Header extends React.Component {
                     onClick={() => {this.props.onSettingsBtnClick()}}><FontAwesomeIcon icon={icons.faCog} /></span>
                 </div>
                 <div className="header--time">
-                    <span className="time--date">{this.state.current_date}</span>
-                    <span className="time--time">{this.state.current_time}</span>
+                    <span className="time--date">{this.state.curDate}</span>
+                    <span className="time--time">{this.state.curTime}</span>
                 </div>
             </header>
         );

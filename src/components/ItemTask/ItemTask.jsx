@@ -17,7 +17,6 @@ class ItemTask extends React.Component {
 
     render() {
         const desc_class = (this.state.isExpanded) ? "item-task__desc" : "item-task__desc--hidden";
-        console.log(desc_class);
         return(
             <div onClick={this.OnClickHandler} className="item-task">
                 <span className="item-task__name">{this.props.task.name}</span>
