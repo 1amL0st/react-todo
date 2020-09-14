@@ -1,5 +1,7 @@
 import React from 'react';
 
+var g_old_state = null;
+
 class AddTaskScreen extends React.Component {
     constructor(props)
     {
@@ -26,15 +28,15 @@ class AddTaskScreen extends React.Component {
         this.ClearState();
         this.setState(this.state);
     }
-
+    
     componentWillUnmount() {
-        localStorage.setItem('addTaskScreenState', JSON.stringify(this.state));
+        g_old_state = {};
+        Object.assign(g_old_state, this.state);
     }
 
     componentDidMount() {
-        let old_state = JSON.parse(localStorage.getItem('addTaskScreenState'));
-        if (old_state) {
-            this.setState(old_state);
+        if (g_old_state) {
+            this.setState(g_old_state);
         }
     }
 
