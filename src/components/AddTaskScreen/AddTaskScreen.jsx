@@ -86,8 +86,8 @@ class AddTaskScreen extends React.Component {
                         Time:
                         <input name="taskTime" className="text-input" type="time" value={this.state.taskTime} onChange={this.OnInputChangeHandler}></input>
                     </label>
-                    <input className="submit" title="Add task" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
-                    <input className="submit clear" title="Clear fields" type="button" value="Clear" onClick={this.OnClearClickHandler}></input>
+                    <input className="button" title="Add task" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
+                    <input className="button clear" title="Clear fields" type="button" value="Clear" onClick={this.OnClearClickHandler}></input>
                 </form>
             </div>
         )

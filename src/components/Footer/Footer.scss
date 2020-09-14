@@ -7,8 +7,6 @@
     @include flex-layout(row, center);
     align-items: center;
     border-radius: 50%;
-    background-color: $item-bg-color;
-    background-color: $main-color;
     position: absolute;
     font-size: 28px;
     bottom: 0.5em;

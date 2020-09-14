@@ -30,15 +30,15 @@ $text-white-color: #eff0f6;
   transform: translate(-50%, -50%);
 
   border: solid 1px darkgray;
+}
 
-  .button {
-    &.is-clicked {
-      background-color: red;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
+.button {
+  border: none;
+  background-color: $main-color;
+  color: $text-white-color;
+  border-radius: 8px;
+  &:hover {
+    cursor: pointer;
   }
 }
 

@@ -33,20 +33,12 @@
     }
   }
 
-  .submit {
-      color: white;
-      background-color: $main-color;
-      margin-top: 32px;
-      border: none;
-      height: 32px;
-      border-radius: 8px;
-
-      &:hover {
-          cursor: pointer;
-      }
+  .button {
+    margin-top: 32px;
+    height: 32px;
   }
 
-  .submit.clear {
+  .button.clear {
     margin-top: 8px;
   }
 }
