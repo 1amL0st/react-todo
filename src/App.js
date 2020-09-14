@@ -16,14 +16,14 @@ class App extends React.Component {
         {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
         {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
       ],
+    }
 
-      settings: {
-        isChanged: false,
-        items: [
-          {name: "Notifications", isAllowed: 'true'},
-          {name: "Sound", isAllowed: 'true'}
-        ]
-      }
+    this.settings = {
+      isChanged: false,
+      items: [
+        {name: "Notifications", isAllowed: false},
+        {name: "Sound", isAllowed: true}
+      ]
     }
 
     this.HeaderSettingsBtnHandler = this.HeaderSettingsBtnHandler.bind(this);
@@ -36,8 +36,9 @@ class App extends React.Component {
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
     this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
 
-    this.settings_screen = <SettingsScreen settings={this.state.settings.items} 
-      onSettingsChange={() => { this.state.settings.isChanged = true;  this.setState(this.state); }}></SettingsScreen>;
+    this.settings_screen_ref = React.createRef();
+    this.settings_screen = <SettingsScreen settings={this.settings.items} ref={this.settings_screen_ref}
+      onSettingsChange={() => { this.settings.isChanged = true;  this.setState(this.state); }}></SettingsScreen>;
 
     this.state.screen_stack = [this.inbox_screen];
 
@@ -73,6 +74,7 @@ class App extends React.Component {
 
   HeaderSettingsBtnHandler() {
     if (this.CurrentScreen() !== this.settings_screen) {
+      this.settings.isChanged = false;
       this.PushScreen(this.settings_screen);
     }
   }
@@ -81,7 +83,9 @@ class App extends React.Component {
     if (this.CurrentScreen() === this.inbox_screen) {
       this.PushScreen(this.add_task_screen);
     } else if (this.CurrentScreen() === this.settings_screen) {
-
+      const settings = this.settings_screen_ref.current.GetSettings();
+      this.settings.items = settings.slice(0, settings.length);
+      this.PopScreen();
     }
   }
 
@@ -100,14 +104,14 @@ class App extends React.Component {
       if (cur_screen === this.inbox_screen) {
         return true;
       } else if (cur_screen === this.settings_screen) {
-        return this.state.settings.isChanged;
+        return this.settings.isChanged;
       }
     }
 
     const r_btn = {
       onClick: this.FooterRBtnHandler,
       isVisible: DisplayFooterRBtn.call(this),
-      isSettingsSave: this.CurrentScreen() === this.settings_screen && this.state.settings.isChanged
+      isSettingsSave: this.CurrentScreen() === this.settings_screen && this.settings.isChanged
     }
 
     return (
