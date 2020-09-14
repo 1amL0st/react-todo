@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import Inbox from './components/Inbox/Inbox'
 import Footer from './components/Footer/Footer';
 import AddTaskScreen from './components/AddTaskScreen/AddTaskScreen'
+import SettingsScreen from './components/SettingsScreen/SettingsScreen'
 
 class App extends React.Component {
   constructor() {
@@ -14,8 +15,15 @@ class App extends React.Component {
         {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
         {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
         {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      ],
+
+      settings: [
+        {name: "Notifications", isAllowed: 'true'},
+        {name: "Sound", isAllowed: 'true'}
       ]
     }
+
+    this.HeaderSettingsBtnHandler = this.HeaderSettingsBtnHandler.bind(this);
 
     this.FooterRBtnHandler = this.FooterRBtnHandler.bind(this);
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
@@ -25,13 +33,15 @@ class App extends React.Component {
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
     this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
 
+    this.settings_screen = <SettingsScreen settings={this.state.settings}></SettingsScreen>;
+
     this.state.screen_stack = [this.inbox_screen];
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
 
-    //this.state.screen_stack.push(this.add_task_screen);
+    this.state.screen_stack.push(this.settings_screen);
   }
 
   AddTaskSubmitHandler(task) {
@@ -56,6 +66,12 @@ class App extends React.Component {
     this.setState({screen_stack: this.state.screen_stack});    
   }
 
+  HeaderSettingsBtnHandler() {
+    if (this.CurrentScreen() !== this.settings_screen) {
+      this.PushScreen(this.settings_screen);
+    }
+  }
+
   FooterRBtnHandler() {
     if (this.CurrentScreen() === this.inbox_screen) {
       this.PushScreen(this.add_task_screen);
@@ -63,7 +79,7 @@ class App extends React.Component {
   }
 
   FooterLBtnHandler() {
-    if (this.CurrentScreen() === this.add_task_screen) {
+    if (this.CurrentScreen() !== this.inbox_screen) {
       this.PopScreen();
     }
   }
@@ -72,7 +88,8 @@ class App extends React.Component {
     const content = this.CurrentScreen();
     return (
       <div className="todo">
-        <Header></Header>
+        <Header
+        onSettingsBtnClick={this.HeaderSettingsBtnHandler}></Header>
         {content}
         <Footer
         rBtn = {{onClick: this.FooterRBtnHandler, isVisible: (this.CurrentScreen() === this.inbox_screen)}}

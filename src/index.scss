@@ -1,4 +1,4 @@
-@mixin flex-layout($direction, $jc, $align_items:"unset") {
+@mixin flex-layout($direction, $jc, $align_items:unset) {
   display: flex;
   flex-direction: $direction;
   justify-content: $jc;
@@ -8,12 +8,6 @@
 $item-bg-color: rgb(244, 244, 244);
 $main-color: #46529d;
 $text-white-color: #eff0f6;
-
-@import './components/Footer/Footer.scss',
-        './components/Header/Header.scss',
-        './components/Inbox/Inbox.scss',
-        './components/ItemTask/ItemTask.scss',
-        './components/AddTaskScreen/AddTaskScreen.scss';
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -56,3 +50,24 @@ $text-white-color: #eff0f6;
   background-color: $item-bg-color;
   box-shadow: 0 0px 2px 0px gray;
 }
+
+.item {
+  @include flex-layout(column, space-between);
+  position: relative;
+  width: 100%;
+  padding: 4px 8px;
+
+  font-size: 16px;
+  background-color: $item-bg-color;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 1px -1px gray;
+}
+
+@import './components/Footer/Footer.scss',
+        './components/Header/Header.scss',
+        './components/Inbox/Inbox.scss',
+        './components/ItemTask/ItemTask.scss',
+        './components/ItemSetting/ItemSetting.scss',
+        './components/AddTaskScreen/AddTaskScreen.scss',
+        './components/SettingsScreen/SettingsScreen.scss';

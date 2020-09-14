@@ -1,18 +1,9 @@
 .item-task {
-  @include flex-layout(column, space-between);
-  position: relative;
-  width: 100%;
-  padding: 4px 8px;
-
-  font-size: 16px;
-  background-color: $item-bg-color;
-  border-radius: 8px;
+  @extend .item;
 
   &:hover {
       cursor: pointer;
   }
-
-  box-shadow: 0 2px 1px -1px gray;
 
   &__name {
     align-self: flex-start;
