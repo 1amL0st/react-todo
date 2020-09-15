@@ -8,15 +8,16 @@ class AddTaskScreen extends React.Component {
         super(props);
 
         this.ClearState = this.ClearState.bind(this);
-        this.ClearState();
+        this.tate = this.DefaultState();
 
         this.OnSubmitClickHandler = this.OnSubmitClickHandler.bind(this);
         this.OnInputChangeHandler = this.OnInputChangeHandler.bind(this);
         this.OnClearClickHandler = this.OnClearClickHandler.bind(this);
     }
 
-    ClearState() {
-        this.state = {
+    DefaultState()
+    {
+        return {
             taskName: "",
             taskDesc: "",
             taskDate: new Date().toLocaleDateString('en-CA'),
@@ -25,8 +26,7 @@ class AddTaskScreen extends React.Component {
     }
 
     OnClearClickHandler() {
-        this.ClearState();
-        this.setState(this.state);
+        this.setState(this.DefaultState());
     }
     
     componentWillUnmount() {

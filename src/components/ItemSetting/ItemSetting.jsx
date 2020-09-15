@@ -3,7 +3,7 @@ import React from 'react';
 class ItemSetting extends React.Component
 {
     OnCheckboxHandler() {
-        this.props.onChange(this.props.index)
+        this.props.onChange(this.props.index);
     }
 
     render()

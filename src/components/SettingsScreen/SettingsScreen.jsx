@@ -17,8 +17,9 @@ class SettingsScreen extends React.Component
     }
 
     OnSettingsChange(index) {
-        this.state.settings[index].isAllowed = !this.state.settings[index].isAllowed;
-        this.setState(this.state);
+        let items = [...this.state.settings];
+        items[index].isAllowed = !items[index].isAllowed;
+        this.setState({settings: items});
         this.props.onSettingsChange();
     }
 
