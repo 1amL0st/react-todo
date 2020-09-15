@@ -5,7 +5,7 @@ import ItemTask from '../ItemTask/ItemTask'
 class Inbox extends React.Component {
     constructor(props) {
         super(props);
-
+    
         this.OnItemSwipeHandler = this.OnItemSwipeHandler.bind(this);
     }
 
@@ -15,13 +15,12 @@ class Inbox extends React.Component {
     }
 
     render() {
-        let key = 0;
         return (
             <div className="inbox">
                 <span className="title">Inbox</span>
                 <ol className="list">{
                     this.props.tasks.map(task => 
-                        (<ItemTask onSwipe={this.OnItemSwipeHandler} task={task} key={key++}></ItemTask>))}
+                        (<ItemTask onSwipe={this.OnItemSwipeHandler} task={task} key={task.key}></ItemTask>))}
                 </ol>
             </div>
         );

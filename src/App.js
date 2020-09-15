@@ -12,7 +12,7 @@ class App extends React.Component {
 
     this.state = {
     }
-    
+
     this.tasks = [
       {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
       {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
@@ -21,6 +21,10 @@ class App extends React.Component {
       {name: 'Learn Math', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
       {name: 'Learn something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
     ];
+
+    for (let i = 0; i < this.tasks.length; ++i) {
+      this.tasks[i].key = i;
+    }
 
     this.settings = {
       isChanged: false,
@@ -58,6 +62,18 @@ class App extends React.Component {
   }
 
   AddTaskSubmitHandler(task) {
+
+    (function AddKey() {
+      let max = 0;
+      if (this.tasks.length !== 0) {
+        max = this.tasks[0].key;
+      }
+      for (let task of this.tasks) {
+        max = Math.max(task.key, max);
+      }
+      task.key = max + 1;
+    }).call(this);
+
     this.tasks.push(task);
     if (this.CurrentScreen() === this.add_task_screen) {
       this.PopScreen();
