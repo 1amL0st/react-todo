@@ -11,12 +11,16 @@ class App extends React.Component {
     super();
 
     this.state = {
-      tasks: [
-        {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-        {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-        {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      ],
     }
+    
+    this.tasks = [
+      {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'Learn Rust', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'Learn Math', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'Learn something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+    ];
 
     this.settings = {
       isChanged: false,
@@ -32,7 +36,7 @@ class App extends React.Component {
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
 
     this.InboxRemoveTaskHandler = this.InboxRemoveTaskHandler.bind(this);
-    this.inbox_screen = (<Inbox tasks={this.state.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
+    this.inbox_screen = (<Inbox tasks={this.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
 
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
     this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
@@ -49,17 +53,16 @@ class App extends React.Component {
   }
 
   InboxRemoveTaskHandler(task) {
-    let index = this.state.tasks.indexOf(task);
-    this.state.tasks.splice(index, 1);
-    this.setState(this.state);
+    let index = this.tasks.indexOf(task);
+    this.tasks.splice(index, 1);
   }
 
   AddTaskSubmitHandler(task) {
-    this.state.tasks.push(task);
+    this.tasks.push(task);
     if (this.CurrentScreen() === this.add_task_screen) {
       this.PopScreen();
     }
-    this.setState({tasks: this.state.tasks});
+    this.setState({tasks: this.tasks});
   }
 
   CurrentScreen() {
