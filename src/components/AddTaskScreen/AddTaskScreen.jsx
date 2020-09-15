@@ -29,13 +29,17 @@ class AddTaskScreen extends React.Component {
     }
     
     componentWillUnmount() {
-        g_old_state = {};
-        Object.assign(g_old_state, this.state);
+        if (g_old_state !== undefined) {
+            g_old_state = {};
+            Object.assign(g_old_state, this.state);
+        }
     }
 
     componentDidMount() {
         if (g_old_state) {
             this.setState(g_old_state);
+        } else {
+            g_old_state = null;
         }
     }
 
@@ -54,6 +58,7 @@ class AddTaskScreen extends React.Component {
     OnSubmitClickHandler(event) {
         if (this.ValidateInputs()) {
             this.props.onSubmitHandler({...this.state});
+            g_old_state = undefined;
         }
         event.preventDefault();
     }
