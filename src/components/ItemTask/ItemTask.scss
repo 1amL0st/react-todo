@@ -1,5 +1,7 @@
 .item-task {
   @extend .item;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 
   &:hover {
       cursor: pointer;

@@ -5,20 +5,45 @@ class ItemTask extends React.Component {
         super(props);
 
         this.state = {
-            isExpanded: false
+            isExpanded: false,
+            swipe: null
         }
 
-        this.OnClickHandler = this.OnClickHandler.bind(this);
+        this.OnMouseDownHandler= this.OnMouseDownHandler.bind(this);
+        this.OnMouseUpHandler = this.OnMouseUpHandler.bind(this);
+        this.OnMouseMoveHandler = this.OnMouseMoveHandler.bind(this);
+        this.OnMouseLeaveHandler = this.OnMouseLeaveHandler.bind(this);
     }
 
-    OnClickHandler() {
-        this.setState({isExpanded: !this.state.isExpanded});
+    OnMouseDownHandler(e) {
+        this.setState({ swipe: {offset: 0, last_x: e.screenX}});
+    }
+
+    OnMouseLeaveHandler(e) {
+        this.setState({swipe: null});
+    }
+
+    OnMouseUpHandler(e) {
+        if (this.state.swipe && this.state.swipe.offset === 0)
+            this.setState({isExpanded: !this.state.isExpanded});
+        this.setState({swipe: null});
+    }
+
+    OnMouseMoveHandler(e) {
+        if (this.state.swipe) {
+            const x = this.state.swipe.last_x;
+            const offset = this.state.swipe.offset + (e.screenX - x);
+            this.setState({ swipe: {offset: offset, last_x: e.screenX}});
+        }
     }
 
     render() {
         const desc_class = (this.state.isExpanded) ? "item-task__desc" : "item-task__desc--hidden";
+        const style = (this.state.swipe) ? {marginLeft: this.state.swipe.offset} : {};
         return(
-            <div onClick={this.OnClickHandler} className="item-task">
+            <div style={style} className="item-task"
+            onMouseDown={this.OnMouseDownHandler} onMouseUp={this.OnMouseUpHandler} onMouseMove={this.OnMouseMoveHandler}
+            onMouseLeave={this.OnMouseLeaveHandler}>
                 <span className="item-task__name">{this.props.task.name}</span>
                 <span className="item-task__date-time">
                     <span className="item-task__date">{this.props.task.date}</span>

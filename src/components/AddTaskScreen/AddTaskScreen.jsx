@@ -7,8 +7,7 @@ class AddTaskScreen extends React.Component {
     {
         super(props);
 
-        this.ClearState = this.ClearState.bind(this);
-        this.tate = this.DefaultState();
+        this.state = this.DefaultState();
 
         this.OnSubmitClickHandler = this.OnSubmitClickHandler.bind(this);
         this.OnInputChangeHandler = this.OnInputChangeHandler.bind(this);
@@ -18,10 +17,10 @@ class AddTaskScreen extends React.Component {
     DefaultState()
     {
         return {
-            taskName: "",
-            taskDesc: "",
-            taskDate: new Date().toLocaleDateString('en-CA'),
-            taskTime: "09:00"
+            name: "",
+            desc: "",
+            date: new Date().toLocaleDateString('en-CA'),
+            time: "09:00"
         }
     }
 
@@ -45,7 +44,7 @@ class AddTaskScreen extends React.Component {
     }
 
     ValidateInputs() {
-        if (this.state.taskName.length === 0) {
+        if (this.state.name.length === 0) {
             alert("You must enter task name!");
             return false;
         }
@@ -54,13 +53,7 @@ class AddTaskScreen extends React.Component {
 
     OnSubmitClickHandler(event) {
         if (this.ValidateInputs()) {
-            let task = this.state;
-            this.props.onSubmitHandler({
-                name: task.taskName,
-                date: task.taskDate,
-                time: task.taskTime,
-                desc: task.taskDesc
-            });
+            this.props.onSubmitHandler({...this.state});
         }
         event.preventDefault();
     }
@@ -72,21 +65,21 @@ class AddTaskScreen extends React.Component {
                 <form>
                     <label>
                         Task name:
-                        <input name="taskName" className="text-input" type="text" value={this.state.taskName} placeholder="Enter task name here"
+                        <input name="name" className="text-input" type="text" value={this.state.name} placeholder="Enter task name here"
                          onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <label>
                         Task description:
-                        <textarea name="taskDesc" className="text-input" type="text" value={this.state.taskDesc} placeholder="Enter task description here"
+                        <textarea name="desc" className="text-input" type="text" value={this.state.desc} placeholder="Enter task description here"
                          onChange={this.OnInputChangeHandler}></textarea>
                     </label>
                     <label>
                         Date:
-                        <input name="taskDate" className="text-input" type="date" value={this.state.taskDate} onChange={this.OnInputChangeHandler}></input>
+                        <input name="date" className="text-input" type="date" value={this.state.date} onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <label>
                         Time:
-                        <input name="taskTime" className="text-input" type="time" value={this.state.taskTime} onChange={this.OnInputChangeHandler}></input>
+                        <input name="time" className="text-input" type="time" value={this.state.time} onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <input className="button" title="Add task" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
                     <input className="button clear" title="Clear fields" type="button" value="Clear" onClick={this.OnClearClickHandler}></input>
