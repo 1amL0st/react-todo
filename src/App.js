@@ -31,7 +31,8 @@ class App extends React.Component {
     this.FooterRBtnHandler = this.FooterRBtnHandler.bind(this);
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
 
-    this.inbox_screen = (<Inbox tasks={this.state.tasks}></Inbox>);
+    this.InboxRemoveTaskHandler = this.InboxRemoveTaskHandler.bind(this);
+    this.inbox_screen = (<Inbox tasks={this.state.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
 
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
     this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
@@ -45,8 +46,12 @@ class App extends React.Component {
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
+  }
 
-    //this.state.screen_stack.push(this.add_task_screen);
+  InboxRemoveTaskHandler(task) {
+    let index = this.state.tasks.indexOf(task);
+    this.state.tasks.splice(index, 1);
+    this.setState(this.state);
   }
 
   AddTaskSubmitHandler(task) {

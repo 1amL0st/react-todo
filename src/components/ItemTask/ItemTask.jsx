@@ -33,7 +33,13 @@ class ItemTask extends React.Component {
         if (this.state.swipe) {
             const x = this.state.swipe.last_x;
             const offset = this.state.swipe.offset + (e.screenX - x);
-            this.setState({ swipe: {offset: offset, last_x: e.screenX}});
+            const max_offset = 200;
+            if (Math.abs(offset) > max_offset) {
+                this.props.onSwipe(this.props.task);
+                this.setState({swipe: null}); //ODD
+            } else {
+                this.setState({ swipe: {offset: offset, last_x: e.screenX}});
+            }
         }
     }
 

@@ -6,26 +6,23 @@ class Inbox extends React.Component {
     constructor(props) {
         super(props);
 
-        let key = 0;
-        this.state = {
-            tasks: this.props.tasks.map(task => 
-                (<ItemTask task={task} key={key++}></ItemTask>)
-            ),
+        this.OnItemSwipeHandler = this.OnItemSwipeHandler.bind(this);
+    }
 
-            swipe: {
-
-            }
-        }
-
-        //this.OnSwipeBegin = this.OnSwipeBegin.bind(this.OnSwipeBegin);
-        //this.OnSwipeEnd = this.OnSwipeEnd.bind(this.OnSwipeEnd);
+    OnItemSwipeHandler(task) {
+        this.props.onRemoveTask(task);
+        this.forceUpdate(); //Why?
     }
 
     render() {
+        let key = 0;
         return (
             <div className="inbox">
                 <span className="title">Inbox</span>
-                <ol className="list">{this.state.tasks}</ol>
+                <ol className="list">{
+                    this.props.tasks.map(task => 
+                        (<ItemTask onSwipe={this.OnItemSwipeHandler} task={task} key={key++}></ItemTask>))}
+                </ol>
             </div>
         );
     }

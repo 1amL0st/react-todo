@@ -20,7 +20,7 @@ $text-white-color: #eff0f6;
 
 .todo {
   @include flex-layout(column, flex-start);
-
+  overflow: hidden;
   color: $text-white-color;
   position: absolute;
   top: 50%;
