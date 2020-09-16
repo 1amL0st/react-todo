@@ -24,7 +24,13 @@ class ItemTask extends React.Component {
     }
 
     OnMouseUpHandler(e) {
-        this.setState({isExpanded: !this.state.isExpanded});
+        if (this.state.swipe) {
+            const is_expanded = (this.state.swipe.offset === 0) ? !this.state.isExpanded : this.state.isExpanded;
+            this.setState({
+                swipe: null,
+                isExpanded: is_expanded
+            });
+        }
     }
 
     OnMouseMoveHandler(e) {
