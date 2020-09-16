@@ -33,6 +33,10 @@
     }
   }
 
+  textarea:focus, input:focus {
+    border: solid 1px $input-focus-color;
+  }
+
   .button {
     margin-top: 32px;
     height: 32px;

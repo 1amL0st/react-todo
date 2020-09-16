@@ -11,7 +11,7 @@ class Inbox extends React.Component {
 
     OnItemSwipeHandler(task) {
         this.props.onRemoveTask(task);
-        this.forceUpdate(); //Why?
+        this.forceUpdate();
     }
 
     render() {

@@ -20,7 +20,7 @@ class AddTaskScreen extends React.Component {
             name: "",
             desc: "",
             date: new Date().toLocaleDateString('en-CA'),
-            time: "09:00"
+            time: new Date().toLocaleTimeString('en-GB').slice(0, -3)
         }
     }
 
@@ -84,7 +84,7 @@ class AddTaskScreen extends React.Component {
                     </label>
                     <label>
                         Time:
-                        <input name="time" className="text-input" type="time" value={this.state.time} onChange={this.OnInputChangeHandler}></input>
+                        <input name="time" className="text-input" type="time"   value={this.state.time} onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <input className="button" title="Add task" type="submit" value="Add" onClick={this.OnSubmitClickHandler}/>
                     <input className="button clear" title="Clear fields" type="button" value="Clear" onClick={this.OnClearClickHandler}></input>
