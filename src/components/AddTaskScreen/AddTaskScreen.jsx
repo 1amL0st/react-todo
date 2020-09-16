@@ -69,12 +69,12 @@ class AddTaskScreen extends React.Component {
                 <span className="title">Add new task</span>
                 <form>
                     <label>
-                        Task name:
+                        Name:
                         <input name="name" className="text-input" type="text" value={this.state.name} placeholder="Enter task name here"
                          onChange={this.OnInputChangeHandler}></input>
                     </label>
                     <label>
-                        Task description:
+                        Description:
                         <textarea name="desc" className="text-input" type="text" value={this.state.desc} placeholder="Enter task description here"
                          onChange={this.OnInputChangeHandler}></textarea>
                     </label>

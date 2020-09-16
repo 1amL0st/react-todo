@@ -14,12 +14,12 @@ class App extends React.Component {
     }
 
     this.tasks = [
-      {name: 'Say something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      {name: 'First', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      {name: 'Learn Rust', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      {name: 'Learn Math', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
-      {name: 'Learn something', desc: "blah-blah-blah", time: "09:00", date: '12-09-2020'},
+      {name: 'Say something', desc: "blah-blah-blah", time: "13:16", date: '16-09-2020'},
+      {name: 'First', desc: "blah-blah-blah", time: "15:00", date: '16-09-2020'},
+      {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: 'Learn Rust', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: 'Learn Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: 'Learn something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
     ];
 
     for (let i = 0; i < this.tasks.length; ++i) {
@@ -55,7 +55,7 @@ class App extends React.Component {
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
 
-    this.state.screen_stack.push(this.add_task_screen);
+    //this.state.screen_stack.push(this.add_task_screen);
   }
 
   InboxRemoveTaskHandler(task) {
