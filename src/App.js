@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer';
 import AddTaskScreen from './components/AddTaskScreen/AddTaskScreen'
 import SettingsScreen from './components/SettingsScreen/SettingsScreen'
 
-import Helpers from './Helpers';
+import MyTime from './MyTime';
 
 class DB
 {
@@ -31,26 +31,20 @@ class DB
     /*************************************************************************** 
       Testing code!!! You must remove it!
     ****************************************************************************/
-    function FirstZero(value)
-    {
-      if (value < 10) {
-        return "0" + value;
-      }
-      return value;
-    }
+    function GetRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
 
     function GenerateTime() {
       const min_hours = new Date().getHours() + 1;
-      const hours = FirstZero(Helpers.GetRandomInt(min_hours, 23));
-      const mins = FirstZero(Helpers.GetRandomInt(0, 59));
-      return hours + ":" + mins;
+      return MyTime.MakeMyTime(GetRandomInt(min_hours, 23), GetRandomInt(0, 59), 0).slice(0, -3);
     }
 
     function GenerateDate() {
       const now = new Date();
-      const day = FirstZero(Helpers.GetRandomInt(now.getDate() - 10, 28));
-      const month = FirstZero(now.getMonth() + 1);
-      return now.getFullYear() + "-" + month + "-" + day;
+      return MyTime.MakeMyDate(now.getFullYear(), now.getMonth() + 1, GetRandomInt(now.getDate() - 5, 30));
     }
 
     this.tasks.forEach((task) => {
@@ -68,8 +62,11 @@ class DB
 
   SortTasks() {
     const UntileNowTime = (task) => {
-      const date_str = task.date + " " + task.time;
-      return Date.parse(date_str) - new Date();
+      const date = MyTime.MyDateAndMyTimeToDate(task.date, task.time);
+      //date.setTime(num);
+      //console.log("Local string = ", date.toISOString());
+      //console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+      return date - new Date();
     }
 
     let active = this.tasks.filter((task) => UntileNowTime(task) > 0);

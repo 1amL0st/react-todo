@@ -10,12 +10,21 @@ class MyTime
         return (value < 10) ? "0" + value : value;
     }
 
+    static MakeMyDate(year = 1, month = 0, day = 1)
+    {
+        return this.ShiftZero(day) + "-" + this.ShiftZero(month) + "-" + this.ShiftZero(year);
+    }
+
+    static MakeMyTime(hours = 0, minutes = 0, seconds = 0) {
+        return this.ShiftZero(hours) + ":" + this.ShiftZero(minutes) + ":" + this.ShiftZero(seconds);
+    }
+
     static DateToMyTime(date) {
-        return this.ShiftZero(date.getHours()) + ":" + this.ShiftZero(date.getMinutes()) + ":" + this.ShiftZero(date.getSeconds());
+        return this.MakeMyTime(date.getHours(), date.getMinutes(), date.getSeconds());
     }
 
     static DateToMyDate(date) {
-        return this.ShiftZero(date.getDate()) + "-" + this.ShiftZero(date.getMonth()) + "-" + this.ShiftZero(date.getFullYear());
+        return this.MakeMyDate(date.getFullYear(), date.getMonth(), date.getDay());
     }
     
     static DateToMyDateNamed(date) {
@@ -24,6 +33,11 @@ class MyTime
             let month = (months[date.getMonth() - 1]).slice(0, 3);
             let day = (days[date.getDay()]).slice(0, 3);
             return `${day} ${month} ${date.getFullYear()}`;
+    }
+
+    static MyDateAndMyTimeToDate(my_date, my_time) {
+        my_date = my_date.split('-').reverse().join('-');
+        return new Date(my_date + "T" + my_time);
     }
 
 }
