@@ -25,8 +25,8 @@ class DB
       {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
-      {name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
+      //{name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
+      //{name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
     ];
     /*************************************************************************** 
       Testing code!!! You must remove it!

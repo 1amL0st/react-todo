@@ -61,7 +61,7 @@ class AddTaskScreen extends React.Component {
                 name: this.state.name,
                 desc: this.state.desc,
                 time: this.state.time,
-                date: this.state.date
+                date: this.state.date.split('-').reverse().join('-')
             });
             g_old_state = undefined;
         }
