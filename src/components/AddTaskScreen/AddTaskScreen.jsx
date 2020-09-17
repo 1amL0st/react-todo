@@ -18,10 +18,12 @@ class AddTaskScreen extends React.Component {
 
     DefaultState()
     {
+        const date = Helpers.DateToDateStr(new Date(), 'en-US');
+        console.log("Date = ", date)
         return {
             name: "",
             desc: "",
-            date: Helpers.DateToDateStr(new Date()),
+            date: date,
             time: Helpers.DateToTimeStr(new Date())
         }
     }
@@ -59,7 +61,12 @@ class AddTaskScreen extends React.Component {
 
     OnSubmitClickHandler(event) {
         if (this.ValidateInputs()) {
-            this.props.onSubmitHandler({...this.state});
+            this.props.onSubmitHandler({
+                name: this.state.name,
+                desc: this.state.desc,
+                time: this.state.time,
+                date: this.state.date
+            });
             g_old_state = undefined;
         }
         event.preventDefault();

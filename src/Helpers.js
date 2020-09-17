@@ -13,7 +13,7 @@ const Helpers = {
     },
 
     DateToTimeStr(date, local_format = 'en-GB') {
-        return date.toLocaleTimeString('en-GB');
+        return date.toLocaleTimeString(local_format).slice(0, -3);
     },
 
     MinsAndHoursUntilNow(date) {

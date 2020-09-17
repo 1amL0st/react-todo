@@ -43,7 +43,7 @@ class ItemTask extends React.Component {
         if (this.state.swipe) {
             const x = this.state.swipe.last_x;
             const offset = this.state.swipe.offset + (e.screenX - x);
-            const max_offset = 200;
+            const max_offset = 150;
             if (Math.abs(offset) > max_offset) {
                 this.props.onSwipe(this.props.task);
                 this.setState({swipe: null}); //ODD
@@ -60,7 +60,7 @@ class ItemTask extends React.Component {
 
     TimeIconData()
     {
-        const date_str = this.props.task.date.split("-").reverse().join("-") + " " + this.props.task.time;
+        const date_str = this.props.task.date + " " + this.props.task.time;
         let time_left = this.TimeUntilNow(Date.parse(date_str));
 
         const hours_str = (time_left.hours) ? time_left.hours + " hours" : "";

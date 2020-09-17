@@ -11,7 +11,6 @@ class Inbox extends React.Component {
 
     OnItemSwipeHandler(task) {
         this.props.onRemoveTask(task);
-        this.forceUpdate();
     }
 
     render() {
@@ -19,7 +18,7 @@ class Inbox extends React.Component {
             <div className="inbox">
                 <span className="title">Inbox</span>
                 <ol className="list">{
-                    this.props.tasks.map(task => 
+                    this.props.tasks.map(task =>
                         (<ItemTask onSwipe={this.OnItemSwipeHandler} task={task} key={task.key}></ItemTask>))}
                 </ol>
             </div>

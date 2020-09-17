@@ -17,16 +17,16 @@ class DB
   GenerateTasks() 
   {
     this.tasks = [
-      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '16-09-2020'},
-      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '16-09-2020'},
-      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
+      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '2020-09-14'},
+      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '2020-09-14'},
+      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
+      // {name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      // {name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
     ];
     /*************************************************************************** 
       Testing code!!! You must remove it!
@@ -42,22 +42,25 @@ class DB
     function GenerateTime() {
       const min_hours = new Date().getHours() + 1;
       const hours = FirstZero(Helpers.GetRandomInt(min_hours, 23));
-      const mins = FirstZero(Helpers.GetRandomInt(0, 60));
+      const mins = FirstZero(Helpers.GetRandomInt(0, 59));
       return hours + ":" + mins;
     }
 
     function GenerateDate() {
       const now = new Date();
-      const day = FirstZero(Helpers.GetRandomInt(now.getDate() - 16, 28));
+      const day = FirstZero(17);//FirstZero(Helpers.GetRandomInt(now.getDate() - 16, 28));
       const month = FirstZero(now.getMonth() + 1);
-      return day + "-" + month + "-" + now.getFullYear();
+      return now.getFullYear() + "-" + month + "-" + day;
     }
-    /**************************************************************** */
-    for (let i = 0; i < this.tasks.length; ++i) {
-      let task = this.tasks[i];
-      task.key = i;
+
+    this.tasks.forEach((task) => {
       task.time = GenerateTime();
       task.date = GenerateDate();
+    });
+
+    /**************************************************************** */
+    for (let i = 0; i < this.tasks.length; ++i) {
+      this.tasks[i].key = i;
     }
 
     this.SortTasks();
@@ -65,33 +68,31 @@ class DB
 
   SortTasks() {
     const UntileNowTime = (task) => {
-      const date_str = task.date.split("-").reverse().join("-") + " " + task.time;
+      const date_str = task.date + " " + task.time;
       return Date.parse(date_str) - new Date();
     }
 
     let active = this.tasks.filter((task) => UntileNowTime(task) > 0);
-    //active.sort((first, second) => UntileNowTime(first) - UntileNowTime(second));;
+    active.sort((first, second) => UntileNowTime(first) - UntileNowTime(second));;
 
     let failed = this.tasks.filter((task) => UntileNowTime(task) <= 0);
-    //failed.sort((first, second) => UntileNowTime(second) - UntileNowTime(first));;
-    console.log('tasks = ', this.tasks);
-    console.log('active = ', active);
-    console.log('failed = ', failed);
+    failed.sort((first, second) => UntileNowTime(second) - UntileNowTime(first));;
+
     this.tasks = active.concat(failed);
   }
 
   AddTask(task)
   {
-    (function AddKey() {
+    (function AddKey(tasks) {
       let max = 0;
-      if (this.tasks.length !== 0) {
-        max = this.tasks[0].key;
+      if (tasks.length !== 0) {
+        max = tasks[0].key;
       }
-      for (let task of this.tasks) {
+      for (let task of tasks) {
         max = Math.max(task.key, max);
       }
       task.key = max + 1;
-    }).call(this);
+    })(this.tasks);
 
     this.tasks.push(task);
     this.SortTasks();
@@ -120,40 +121,41 @@ class App extends React.Component {
       ]
     }
 
+    this.Screens = {
+      AddTask: 0,
+      Settings: 1,
+      Inbox: 2
+    };
+    Object.freeze(this.Screens);
+
     this.HeaderSettingsBtnHandler = this.HeaderSettingsBtnHandler.bind(this);
 
     this.FooterRBtnHandler = this.FooterRBtnHandler.bind(this);
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
 
     this.InboxRemoveTaskHandler = this.InboxRemoveTaskHandler.bind(this);
-    this.inbox_screen = (<Inbox tasks={this.db.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
 
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
-    this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
 
     this.settings_screen_ref = React.createRef();
-    this.settings_screen = <SettingsScreen settings={this.settings.items} ref={this.settings_screen_ref}
-      onSettingsChange={() => { this.settings.isChanged = true;  this.setState(this.state); }}></SettingsScreen>;
 
-    this.state.screen_stack = [this.inbox_screen];
+    this.state.screen_stack = [this.Screens.Inbox];
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
 
-    //this.state.screen_stack.push(this.add_task_screen);
+    //this.state.screen_stack.push(this.Screens.AddTask);
   }
 
   InboxRemoveTaskHandler(task) {
     this.db.RemoveTask(task);
+    this.setState(this);
   }
 
   AddTaskSubmitHandler(task) {
     this.db.AddTask(task);
-
-    if (this.CurrentScreen() === this.add_task_screen) {
-      this.PopScreen();
-    }
+    this.PopScreen();
   }
 
   CurrentScreen() {
@@ -171,16 +173,16 @@ class App extends React.Component {
   }
 
   HeaderSettingsBtnHandler() {
-    if (this.CurrentScreen() !== this.settings_screen) {
+    if (this.CurrentScreen() !== this.Screens.Settings) {
       this.settings.isChanged = false;
-      this.PushScreen(this.settings_screen);
+      this.PushScreen(this.Screens.Settings);
     }
   }
 
   FooterRBtnHandler() {
-    if (this.CurrentScreen() === this.inbox_screen) {
-      this.PushScreen(this.add_task_screen);
-    } else if (this.CurrentScreen() === this.settings_screen) {
+    if (this.CurrentScreen() === this.Screens.Inbox) {
+      this.PushScreen(this.Screens.AddTask);
+    } else if (this.CurrentScreen() === this.Screens.Settings) {
       const settings = this.settings_screen_ref.current.GetSettings();
       this.settings.items = settings.slice(0, settings.length);
       this.PopScreen();
@@ -188,20 +190,31 @@ class App extends React.Component {
   }
 
   FooterLBtnHandler() {
-    if (this.CurrentScreen() !== this.inbox_screen) {
+    if (this.CurrentScreen() !== this.Screens.Inbox) {
       this.PopScreen();
     }
   }
 
   render() {
-    const content = this.CurrentScreen();
+    let content = (function RenderContent() {
+      switch (this.CurrentScreen()) {
+        case this.Screens.AddTask:
+          return (<AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>);
+        case this.Screens.Settings:
+          return (<SettingsScreen settings={this.settings.items} ref={this.settings_screen_ref}
+            onSettingsChange={() => { this.settings.isChanged = true;  this.setState(this.state); }}></SettingsScreen>);
+        case this.Screens.Inbox:
+          return (<Inbox tasks={this.db.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>)
+        default: break;
+      }
+    }).call(this);
 
     function DisplayFooterRBtn()
     {
       const cur_screen = this.CurrentScreen();
-      if (cur_screen === this.inbox_screen) {
+      if (cur_screen === this.Screens.Inbox) {
         return true;
-      } else if (cur_screen === this.settings_screen) {
+      } else if (cur_screen === this.Screens.Settings) {
         return this.settings.isChanged;
       }
     }
@@ -209,7 +222,7 @@ class App extends React.Component {
     const r_btn = {
       onClick: this.FooterRBtnHandler,
       isVisible: DisplayFooterRBtn.call(this),
-      isSettingsSave: this.CurrentScreen() === this.settings_screen && this.settings.isChanged
+      isSettingsSave: this.CurrentScreen() === this.Screens.Settings && this.settings.isChanged
     }
 
     return (
@@ -219,7 +232,7 @@ class App extends React.Component {
         {content}
         <Footer
         rBtn = {r_btn}
-        lBtn = {{onClick: this.FooterLBtnHandler, isVisible: (this.CurrentScreen() !== this.inbox_screen)}}></Footer>
+        lBtn = {{onClick: this.FooterLBtnHandler, isVisible: (this.CurrentScreen() !== this.Screens.Inbox)}}></Footer>
       </div>
     );
   }
