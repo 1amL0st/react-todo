@@ -3,6 +3,8 @@ import React from 'react';
 import * as icons from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import Helpers from '../../Helpers';
+
 class ItemTask extends React.Component {
     constructor(props) {
         super(props);
@@ -53,13 +55,7 @@ class ItemTask extends React.Component {
 
     TimeUntilNow(date)
     {
-        const time_left = (date - new Date()) / (1000);
-        let hours = time_left / 3600;
-        hours = (hours < 0) ? Math.round(hours) : Math.floor(hours);
-        return {
-            hours: hours,
-            minutes:  Math.round((time_left / 60 - hours * 60 * Math.sign(hours))) % 60
-        }
+        return Helpers.MinsAndHoursUntilNow(date);
     }
 
     TimeIconData()

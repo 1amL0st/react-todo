@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Helpers from '../../Helpers'
+
 var g_old_state = null;
 
 class AddTaskScreen extends React.Component {
@@ -19,8 +21,8 @@ class AddTaskScreen extends React.Component {
         return {
             name: "",
             desc: "",
-            date: new Date().toLocaleDateString('en-CA'),
-            time: new Date().toLocaleTimeString('en-GB').slice(0, -3)
+            date: Helpers.DateToDateStr(new Date()),
+            time: Helpers.DateToTimeStr(new Date())
         }
     }
 

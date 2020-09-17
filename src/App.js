@@ -6,25 +6,111 @@ import Footer from './components/Footer/Footer';
 import AddTaskScreen from './components/AddTaskScreen/AddTaskScreen'
 import SettingsScreen from './components/SettingsScreen/SettingsScreen'
 
+import Helpers from './Helpers';
+
+class DB
+{
+  constructor() {
+    this.GenerateTasks();
+  }
+
+  GenerateTasks() 
+  {
+    this.tasks = [
+      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '16-09-2020'},
+      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '16-09-2020'},
+      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      {name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
+    ];
+    /*************************************************************************** 
+      Testing code!!! You must remove it!
+    ****************************************************************************/
+    function FirstZero(value)
+    {
+      if (value < 10) {
+        return "0" + value;
+      }
+      return value;
+    }
+
+    function GenerateTime() {
+      const min_hours = new Date().getHours() + 1;
+      const hours = FirstZero(Helpers.GetRandomInt(min_hours, 23));
+      const mins = FirstZero(Helpers.GetRandomInt(0, 60));
+      return hours + ":" + mins;
+    }
+
+    function GenerateDate() {
+      const now = new Date();
+      const day = FirstZero(Helpers.GetRandomInt(now.getDate() - 16, 28));
+      const month = FirstZero(now.getMonth() + 1);
+      return day + "-" + month + "-" + now.getFullYear();
+    }
+    /**************************************************************** */
+    for (let i = 0; i < this.tasks.length; ++i) {
+      let task = this.tasks[i];
+      task.key = i;
+      task.time = GenerateTime();
+      task.date = GenerateDate();
+    }
+
+    this.SortTasks();
+  }
+
+  SortTasks() {
+    const UntileNowTime = (task) => {
+      const date_str = task.date.split("-").reverse().join("-") + " " + task.time;
+      return Date.parse(date_str) - new Date();
+    }
+
+    let active = this.tasks.filter((task) => UntileNowTime(task) > 0);
+    //active.sort((first, second) => UntileNowTime(first) - UntileNowTime(second));;
+
+    let failed = this.tasks.filter((task) => UntileNowTime(task) <= 0);
+    //failed.sort((first, second) => UntileNowTime(second) - UntileNowTime(first));;
+    console.log('tasks = ', this.tasks);
+    console.log('active = ', active);
+    console.log('failed = ', failed);
+    this.tasks = active.concat(failed);
+  }
+
+  AddTask(task)
+  {
+    (function AddKey() {
+      let max = 0;
+      if (this.tasks.length !== 0) {
+        max = this.tasks[0].key;
+      }
+      for (let task of this.tasks) {
+        max = Math.max(task.key, max);
+      }
+      task.key = max + 1;
+    }).call(this);
+
+    this.tasks.push(task);
+    this.SortTasks();
+  }
+
+  RemoveTask(task) 
+  {
+    let index = this.tasks.indexOf(task);
+    this.tasks.splice(index, 1);
+  }
+}
+
 class App extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-    }
+    this.state = {};
 
-    this.tasks = [
-      {name: 'Say something', desc: "blah-blah-blah", time: "13:16", date: '16-09-2020'},
-      {name: 'First', desc: "blah-blah-blah", time: "15:00", date: '16-09-2020'},
-      {name: 'Second', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: 'Learn Rust', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: 'Learn Math', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      {name: 'Learn something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-    ];
-
-    for (let i = 0; i < this.tasks.length; ++i) {
-      this.tasks[i].key = i;
-    }
+    this.db = new DB();
 
     this.settings = {
       isChanged: false,
@@ -40,7 +126,7 @@ class App extends React.Component {
     this.FooterLBtnHandler = this.FooterLBtnHandler.bind(this);
 
     this.InboxRemoveTaskHandler = this.InboxRemoveTaskHandler.bind(this);
-    this.inbox_screen = (<Inbox tasks={this.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
+    this.inbox_screen = (<Inbox tasks={this.db.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>);
 
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
     this.add_task_screen = <AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>;
@@ -59,28 +145,15 @@ class App extends React.Component {
   }
 
   InboxRemoveTaskHandler(task) {
-    let index = this.tasks.indexOf(task);
-    this.tasks.splice(index, 1);
+    this.db.RemoveTask(task);
   }
 
   AddTaskSubmitHandler(task) {
+    this.db.AddTask(task);
 
-    (function AddKey() {
-      let max = 0;
-      if (this.tasks.length !== 0) {
-        max = this.tasks[0].key;
-      }
-      for (let task of this.tasks) {
-        max = Math.max(task.key, max);
-      }
-      task.key = max + 1;
-    }).call(this);
-
-    this.tasks.push(task);
     if (this.CurrentScreen() === this.add_task_screen) {
       this.PopScreen();
     }
-    this.setState({tasks: this.tasks});
   }
 
   CurrentScreen() {

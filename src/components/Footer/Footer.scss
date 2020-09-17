@@ -1,7 +1,7 @@
 .footer {
   @include flex-layout(row, flex-end);
   position: relative;
-  height: 0px;
+  height: 32px;
 
   .button {
     @include flex-layout(row, center);
