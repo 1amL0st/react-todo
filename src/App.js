@@ -17,16 +17,16 @@ class DB
   GenerateTasks() 
   {
     this.tasks = [
-      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '2020-09-14'},
-      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '2020-09-14'},
-      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '2020-09-14'},
-      // {name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      // {name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
+      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '17-09-2020'},
+      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '17-09-2020'},
+      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
+      //{name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
+      //{name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
     ];
     /*************************************************************************** 
       Testing code!!! You must remove it!
@@ -48,7 +48,7 @@ class DB
 
     function GenerateDate() {
       const now = new Date();
-      const day = FirstZero(17);//FirstZero(Helpers.GetRandomInt(now.getDate() - 16, 28));
+      const day = FirstZero(Helpers.GetRandomInt(now.getDate() - 10, 28));
       const month = FirstZero(now.getMonth() + 1);
       return now.getFullYear() + "-" + month + "-" + day;
     }

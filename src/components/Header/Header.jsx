@@ -3,22 +3,22 @@ import React from 'react';
 import * as icons from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Helpers from "../../Helpers"
+import MyTime from '../../MyTime'
 
 class Header extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            curDate: Helpers.DateToDateStr(new Date()),
-            curTime: Helpers.DateToTimeStr(new Date())
+            curDate: MyTime.DateToMyDateNamed(new Date()),
+            curTime: MyTime.DateToMyTime(new Date())
         }
     }
 
     componentDidMount() {
         this.interval = setInterval(() => {
-            this.setState({curDate: Helpers.DateToDateStr(new Date())});
-            this.setState({curTime: Helpers.DateToTimeStr(new Date())});
+            this.setState({curDate: MyTime.DateToMyDateNamed(new Date())});
+            this.setState({curTime: MyTime.DateToMyTime(new Date())});
         }, 1000);
     }
 
