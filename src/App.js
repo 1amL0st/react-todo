@@ -25,8 +25,8 @@ class DB
       {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      //{name: '9 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'},
-      //{name: '10 Three something', desc: "blah-blah-blah", time: "09:00", date: '16-09-2020'}
+      {name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
+      {name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
     ];
     /*************************************************************************** 
       Testing code!!! You must remove it!
@@ -47,10 +47,11 @@ class DB
       return MyTime.MakeMyDate(now.getFullYear(), now.getMonth() + 1, GetRandomInt(now.getDate() - 5, 30));
     }
 
-    this.tasks.forEach((task) => {
+    for (let i = 0; i < this.tasks.length - 2; ++i) {
+      let task = this.tasks[i];
       task.time = GenerateTime();
       task.date = GenerateDate();
-    });
+    }
 
     /**************************************************************** */
     for (let i = 0; i < this.tasks.length; ++i) {
@@ -63,9 +64,6 @@ class DB
   SortTasks() {
     const UntileNowTime = (task) => {
       const date = MyTime.MyDateAndMyTimeToDate(task.date, task.time);
-      //date.setTime(num);
-      //console.log("Local string = ", date.toISOString());
-      //console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       return date - new Date();
     }
 
@@ -106,9 +104,9 @@ class App extends React.Component {
   constructor() {
     super();
 
-    this.state = {};
-
     this.db = new DB();
+
+    this.state = {};
 
     this.settings = {
       isChanged: false,

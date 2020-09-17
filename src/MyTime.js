@@ -40,6 +40,28 @@ class MyTime
         return new Date(my_date + "T" + my_time);
     }
 
+    static MyDateAndMyTimeUntilNow(my_date, my_time) {
+        const date = this.MyDateAndMyTimeToDate(my_date, my_time);
+        let ms = date - new Date();
+
+        const sign = Math.sign(ms);
+
+        ms = Math.abs(ms);
+        const hours = Math.floor(ms / (3600 * 1000));
+        ms -= hours * 3600 * 1000;
+
+        const minutes = Math.floor(ms / (60 * 1000));
+        ms -= minutes * 60 * 1000;
+
+        const seconds = Math.floor(ms / 1000);
+
+        return {
+            ms: ms,
+            seconds: seconds * sign,
+            minutes: minutes * sign,
+            hours: hours * sign
+        }
+    }
 }
 
 export default MyTime;

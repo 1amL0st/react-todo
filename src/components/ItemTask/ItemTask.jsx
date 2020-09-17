@@ -3,7 +3,7 @@ import React from 'react';
 import * as icons from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Helpers from '../../Helpers';
+import MyTime from '../../MyTime';
 
 class ItemTask extends React.Component {
     constructor(props) {
@@ -53,15 +53,14 @@ class ItemTask extends React.Component {
         }
     }
 
-    TimeUntilNow(date)
+    TimeUntilNow(my_date, my_time)
     {
-        return Helpers.MinsAndHoursUntilNow(date);
+        return MyTime.MyDateAndMyTimeToDate(my_date, my_time) - new Date();
     }
 
     TimeIconData()
     {
-        const date_str = this.props.task.date + " " + this.props.task.time;
-        let time_left = this.TimeUntilNow(Date.parse(date_str));
+        const time_left = MyTime.MyDateAndMyTimeUntilNow(this.props.task.date, this.props.task.time);
 
         const hours_str = (time_left.hours) ? time_left.hours + " hours" : "";
         const minutes_str = (time_left.minutes) ? time_left.minutes + " minutes" : "";
