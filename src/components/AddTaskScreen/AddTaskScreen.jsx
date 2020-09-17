@@ -19,7 +19,6 @@ class AddTaskScreen extends React.Component {
     DefaultState()
     {
         const date = Helpers.DateToDateStr(new Date(), 'en-US');
-        console.log("Date = ", date)
         return {
             name: "",
             desc: "",

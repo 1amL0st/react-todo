@@ -137,6 +137,7 @@ class App extends React.Component {
 
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
 
+    this.OnSettingsChange = this.OnSettingsChange.bind(this);
     this.settings_screen_ref = React.createRef();
 
     this.state.screen_stack = [this.Screens.Inbox];
@@ -144,8 +145,6 @@ class App extends React.Component {
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
-
-    //this.state.screen_stack.push(this.Screens.AddTask);
   }
 
   InboxRemoveTaskHandler(task) {
@@ -183,8 +182,7 @@ class App extends React.Component {
     if (this.CurrentScreen() === this.Screens.Inbox) {
       this.PushScreen(this.Screens.AddTask);
     } else if (this.CurrentScreen() === this.Screens.Settings) {
-      const settings = this.settings_screen_ref.current.GetSettings();
-      this.settings.items = settings.slice(0, settings.length);
+      this.settings.items = [...this.settings_screen_ref.current.GetSettings()];
       this.PopScreen();
     }
   }
@@ -195,6 +193,11 @@ class App extends React.Component {
     }
   }
 
+  OnSettingsChange() {
+    this.settings.isChanged = true;  
+    this.setState(this.state);
+  }
+
   render() {
     let content = (function RenderContent() {
       switch (this.CurrentScreen()) {
@@ -202,7 +205,7 @@ class App extends React.Component {
           return (<AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>);
         case this.Screens.Settings:
           return (<SettingsScreen settings={this.settings.items} ref={this.settings_screen_ref}
-            onSettingsChange={() => { this.settings.isChanged = true;  this.setState(this.state); }}></SettingsScreen>);
+            onSettingsChange={this.OnSettingsChange}></SettingsScreen>);
         case this.Screens.Inbox:
           return (<Inbox tasks={this.db.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>)
         default: break;
