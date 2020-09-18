@@ -25,8 +25,8 @@ class DB
       {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
       {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      //{name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
-      //{name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
+      {name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
+      {name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
     ];
     /*************************************************************************** 
       Testing code!!! You must remove it!
@@ -44,7 +44,7 @@ class DB
 
     function GenerateDate() {
       const now = new Date();
-      return MyTime.MakeMyDate(now.getFullYear(), now.getMonth() + 1, GetRandomInt(now.getDate() - 5, 30));
+      return MyTime.MakeMyDate(GetRandomInt(now.getDate() - 5, 30), now.getMonth() + 1, now.getFullYear());
     }
 
     for (let i = 0; i < this.tasks.length - 2; ++i) {
@@ -136,6 +136,7 @@ class App extends React.Component {
     this.settings_screen_ref = React.createRef();
 
     this.state.screen_stack = [this.Screens.Inbox];
+    this.state.screen_stack.push(this.Screens.AddTask);
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);

@@ -27,13 +27,17 @@
     @include flex-layout(column, flex-start);
 
     label {
-      display: inline-block;
+      @include flex-layout(column, flex-start, center);
       margin: 16px;
       max-width: 100%;
     }
+
+    .react-datepicker-wrapper {
+      width: 100%;
+    }
   }
 
-  textarea:focus, input:focus {
+  .input:focus {
     border: solid 1px $input-focus-color;
   }
 

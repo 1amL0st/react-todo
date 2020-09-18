@@ -7,15 +7,19 @@ class Inbox extends React.Component {
         super(props);
     
         this.OnItemSwipeHandler = this.OnItemSwipeHandler.bind(this);
+        this.OnMouseWheel = this.OnMouseWheel.bind(this);
     }
 
     OnItemSwipeHandler(task) {
         this.props.onRemoveTask(task);
     }
 
+    OnMouseWheel(e) {
+    }
+
     render() {
         return (
-            <div className="inbox">
+            <div onWheel={this.OnMouseWheel} className="inbox">
                 <span className="title">Inbox</span>
                 <ol className="list">{
                     this.props.tasks.map(task =>
