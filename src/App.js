@@ -15,6 +15,9 @@ class DB
   }
 
   GenerateTasks() {
+    /*************************************************************************** 
+      Testing code!!! You must remove it!
+    ****************************************************************************/
     this.tasks = [
       {name: '1', desc: "blah-blah-blah", time: "13:16", date: '17-09-2020'},
       {name: '2', desc: "blah-blah-blah", time: "15:00", date: '17-09-2020'},
@@ -27,9 +30,14 @@ class DB
       {name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
       {name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
     ];
-    /*************************************************************************** 
-      Testing code!!! You must remove it!
-    ****************************************************************************/
+    for (let i = 0; i < 10; ++i){
+      this.tasks.push({
+        name: String(i * 10 + i + " test"),
+        desc: i,
+        time: "",
+        date: ""
+      });
+    }
     function GetRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);

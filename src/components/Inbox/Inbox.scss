@@ -17,8 +17,11 @@
   .list {
     width: 100%;
     height: calc(100% - 120px);
-    overflow: hidden;
-    border: 1px solid red;
+    overflow: scroll;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
   }
 
   .item-task {
