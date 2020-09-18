@@ -4,6 +4,7 @@ import MyTime from '../../MyTime';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+
 var g_old_state = null;
 
 class AddTaskScreen extends React.Component {
@@ -25,7 +26,7 @@ class AddTaskScreen extends React.Component {
             name: "",
             desc: "",
             date: MyTime.DateToMyDate(new Date()),
-            time: MyTime.DateToMyTime(new Date()).slice(0, -3)
+            time: MyTime.DateToMyTime(new Date()).slice(0, -3),
         }
     }
 
@@ -100,9 +101,10 @@ class AddTaskScreen extends React.Component {
                         <DatePicker className="input text-input" onChange={this.OnDatePickerChange}
                         selected={MyTime.MyDateAndMyTimeToDate(this.state.date, this.state.time)}
                         value={this.state.date + " " + this.state.time}
+                        minDate={new Date()}
                         timeInputLabel="Time:"
-                        timeFormat="HH:mm"
-                        dateFormat="dd/MM/yyyy HH:mm"
+                        timeFormat="hh:mm"
+                        dateFormat="dd/MM/yyyy"
                         showTimeInput>
                         </DatePicker>
                     </label>

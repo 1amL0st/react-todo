@@ -14,8 +14,7 @@ class DB
     this.GenerateTasks();
   }
 
-  GenerateTasks() 
-  {
+  GenerateTasks() {
     this.tasks = [
       {name: '1', desc: "blah-blah-blah", time: "13:16", date: '17-09-2020'},
       {name: '2', desc: "blah-blah-blah", time: "15:00", date: '17-09-2020'},
@@ -76,8 +75,7 @@ class DB
     this.tasks = active.concat(failed);
   }
 
-  AddTask(task)
-  {
+  AddTask(task) {
     (function AddKey(tasks) {
       let max = 0;
       if (tasks.length !== 0) {
@@ -93,8 +91,7 @@ class DB
     this.SortTasks();
   }
 
-  RemoveTask(task) 
-  {
+  RemoveTask(task) {
     let index = this.tasks.indexOf(task);
     this.tasks.splice(index, 1);
   }
@@ -136,7 +133,7 @@ class App extends React.Component {
     this.settings_screen_ref = React.createRef();
 
     this.state.screen_stack = [this.Screens.Inbox];
-    this.state.screen_stack.push(this.Screens.AddTask);
+    //this.state.screen_stack.push(this.Screens.AddTask);
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
@@ -208,8 +205,7 @@ class App extends React.Component {
       }
     }).call(this);
 
-    function DisplayFooterRBtn()
-    {
+    function DisplayFooterRBtn() {
       const cur_screen = this.CurrentScreen();
       if (cur_screen === this.Screens.Inbox) {
         return true;

@@ -16,8 +16,9 @@
 
   .list {
     width: 100%;
-    max-height: calc(100% - 0px);
-    //overflow: hidden;
+    height: calc(100% - 120px);
+    overflow: hidden;
+    border: 1px solid red;
   }
 
   .item-task {
