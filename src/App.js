@@ -19,20 +19,11 @@ class DB
       Testing code!!! You must remove it!
     ****************************************************************************/
     this.tasks = [
-      {name: '1', desc: "blah-blah-blah", time: "13:16", date: '17-09-2020'},
-      {name: '2', desc: "blah-blah-blah", time: "15:00", date: '17-09-2020'},
-      {name: '3', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '4 Rust', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '5 Learn Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '6 Learn something', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '7 One', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '8 Two Math', desc: "blah-blah-blah", time: "09:00", date: '17-09-2020'},
-      {name: '9 Three something', desc: "blah-blah-blah", time: "22:00", date: '17-09-2020'},
-      {name: '10 Three something', desc: "blah-blah-blah", time: "21:00", date: '17-09-2020'}
     ];
-    for (let i = 0; i < 10; ++i){
+
+    for (let i = 0; i < 30; ++i){
       this.tasks.push({
-        name: String(i * 10 + i + " test"),
+        name: String(100 + i + " test"),
         desc: i,
         time: "",
         date: ""

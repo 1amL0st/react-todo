@@ -1,6 +1,6 @@
 .inbox {
   @include flex-layout(column, flex-start, center);
-  height: 100%;
+  max-height: 540px;
   padding: 0 10%;
 
   background-color: white;
@@ -16,8 +16,9 @@
 
   .list {
     width: 100%;
-    height: calc(100% - 120px);
-    overflow: scroll;
+    max-height: calc(100% - 100px);
+    overflow: auto;
+    scrollbar-width: none;
   }
 
   .list::-webkit-scrollbar {
