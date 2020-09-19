@@ -24,13 +24,12 @@ class SettingsScreen extends React.Component
  
     render()
     {
-        let key = 0;
         return (
             <div className="screen--settings">
                 <span className="title">Settings</span>
                 <ol className="list">{
-                    this.state.settings.map(item => (
-                        <ItemSetting key={key++} index={key - 1} name={item.name} isAllowed={item.isAllowed} onChange={this.OnSettingsChange}></ItemSetting>
+                    this.state.settings.map((item, index) => (
+                        <ItemSetting key={index} index={index} item={item} onChange={this.OnSettingsChange}></ItemSetting>
                     ))
                 }</ol>
             </div>

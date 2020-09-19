@@ -107,21 +107,25 @@ class Logic {
       isChanged: false,
       items: [
         {name: "Notifications", isAllowed: false, isSupported: false},
-        {name: "Sound", isAllowed: true, isSupported: true}
+        {name: "Sound", isAllowed: true, isSupported: false}
       ]
     }
 
-    this.notification_timer = setInterval(() => {
-      
+    this.settings.items[0].isSupported = (Notification !== undefined);
+    this.settings.items[1].isSupported = (Audio !== undefined);
+    console.log(this.settings.items);
+
+    this.notification_interval = setInterval(() => {
+
     }, 1000 * 5);
   }
 
   OnSettingsChange(items) {
     this.settings = {
       isChanged: true,
-      items: {
+      items: [
         ...items
-      }
+      ]
     }
   }
 }
