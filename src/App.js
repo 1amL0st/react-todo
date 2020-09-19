@@ -14,10 +14,10 @@ class DB
     this.GenerateTasks();
   }
 
-  GenerateTasks() {
-    /*************************************************************************** 
+  /*************************************************************************** 
       Testing code!!! You must remove it!
-    ****************************************************************************/
+  ****************************************************************************/
+  GenerateTasks() {
     this.tasks = [
     ];
 
@@ -36,29 +36,32 @@ class DB
     };
 
     function GenerateTime() {
-      const min_hours = new Date().getHours() + 1;
-      return MyTime.MakeMyTime(GetRandomInt(min_hours, 23), GetRandomInt(0, 59), 0).slice(0, -3);
+      const now = new Date();
+      const [min_hours, max_hours] = [now.getHours() + 1, now.getHours() + 3];
+      return MyTime.MakeMyTime(GetRandomInt(min_hours, max_hours), GetRandomInt(0, 59), 0).slice(0, -3);
     }
 
     function GenerateDate() {
       const now = new Date();
-      return MyTime.MakeMyDate(GetRandomInt(now.getDate() - 5, 30), now.getMonth() + 1, now.getFullYear());
+      const [min_date, max_date] = [now.getDate(), now.getDate() + 1];
+      return MyTime.MakeMyDate(GetRandomInt(min_date, max_date), now.getMonth() + 1, now.getFullYear());
     }
 
     for (let i = 0; i < this.tasks.length - 2; ++i) {
       let task = this.tasks[i];
       task.time = GenerateTime();
       task.date = GenerateDate();
+      task.notified = false;
     }
 
-    /**************************************************************** */
+    
     for (let i = 0; i < this.tasks.length; ++i) {
       this.tasks[i].key = i;
     }
 
     this.SortTasks();
   }
-
+  /**************************************************************** */
   SortTasks() {
     const UntileNowTime = (task) => {
       const date = MyTime.MyDateAndMyTimeToDate(task.date, task.time);
@@ -96,21 +99,41 @@ class DB
   }
 }
 
+class Logic {
+  constructor(db) {
+    this.db = db;
+    
+    this.settings = {
+      isChanged: false,
+      items: [
+        {name: "Notifications", isAllowed: false, isSupported: false},
+        {name: "Sound", isAllowed: true, isSupported: true}
+      ]
+    }
+
+    this.notification_timer = setInterval(() => {
+      
+    }, 1000 * 5);
+  }
+
+  OnSettingsChange(items) {
+    this.settings = {
+      isChanged: true,
+      items: {
+        ...items
+      }
+    }
+  }
+}
+
 class App extends React.Component {
   constructor() {
     super();
 
     this.db = new DB();
+    this.logic = new Logic(this.db);
 
     this.state = {};
-
-    this.settings = {
-      isChanged: false,
-      items: [
-        {name: "Notifications", isAllowed: false},
-        {name: "Sound", isAllowed: true}
-      ]
-    }
 
     this.Screens = {
       AddTask: 0,
@@ -129,10 +152,9 @@ class App extends React.Component {
     this.AddTaskSubmitHandler = this.AddTaskSubmitHandler.bind(this);
 
     this.OnSettingsChange = this.OnSettingsChange.bind(this);
-    this.settings_screen_ref = React.createRef();
 
     this.state.screen_stack = [this.Screens.Inbox];
-    //this.state.screen_stack.push(this.Screens.AddTask);
+    this.state.screen_stack.push(this.Screens.Settings);
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
@@ -165,7 +187,7 @@ class App extends React.Component {
 
   HeaderSettingsBtnHandler() {
     if (this.CurrentScreen() !== this.Screens.Settings) {
-      this.settings.isChanged = false;
+      this.logic.settings.isChanged = false;
       this.PushScreen(this.Screens.Settings);
     }
   }
@@ -174,7 +196,6 @@ class App extends React.Component {
     if (this.CurrentScreen() === this.Screens.Inbox) {
       this.PushScreen(this.Screens.AddTask);
     } else if (this.CurrentScreen() === this.Screens.Settings) {
-      this.settings.items = [...this.settings_screen_ref.current.GetSettings()];
       this.PopScreen();
     }
   }
@@ -185,9 +206,9 @@ class App extends React.Component {
     }
   }
 
-  OnSettingsChange() {
-    this.settings.isChanged = true;  
-    this.setState(this.state);
+  OnSettingsChange(items) {
+    this.logic.OnSettingsChange(items);
+    this.forceUpdate();
   }
 
   render() {
@@ -196,7 +217,7 @@ class App extends React.Component {
         case this.Screens.AddTask:
           return (<AddTaskScreen onSubmitHandler={this.AddTaskSubmitHandler}></AddTaskScreen>);
         case this.Screens.Settings:
-          return (<SettingsScreen settings={this.settings.items} ref={this.settings_screen_ref}
+          return (<SettingsScreen settings={this.logic.settings.items}
             onSettingsChange={this.OnSettingsChange}></SettingsScreen>);
         case this.Screens.Inbox:
           return (<Inbox tasks={this.db.tasks} onRemoveTask={this.InboxRemoveTaskHandler}></Inbox>)
@@ -209,14 +230,14 @@ class App extends React.Component {
       if (cur_screen === this.Screens.Inbox) {
         return true;
       } else if (cur_screen === this.Screens.Settings) {
-        return this.settings.isChanged;
+        return this.logic.settings.isChanged;
       }
     }
 
     const r_btn = {
       onClick: this.FooterRBtnHandler,
       isVisible: DisplayFooterRBtn.call(this),
-      isSettingsSave: this.CurrentScreen() === this.Screens.Settings && this.settings.isChanged
+      isSettingsSave: this.CurrentScreen() === this.Screens.Settings && this.logic.settings.isChanged
     }
 
     return (

@@ -65,6 +65,10 @@ $text-white-color: #eff0f6;
   box-shadow: 0 2px 1px -1px gray;
 }
 
+.item:hover {
+  cursor: pointer;
+}
+
 @import './components/Footer/Footer.scss',
         './components/Header/Header.scss',
         './components/Inbox/Inbox.scss',

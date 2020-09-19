@@ -8,10 +8,11 @@ class ItemSetting extends React.Component
 
     render()
     {
+        const class_name = (this.props.isSupported) ? "item-setting" : "item-setting item-setting--disabled";
         return (
-            <div className="item-setting">
+            <div className={class_name} onClick={() => { this.OnCheckboxHandler.call(this); }}>
                 <span>{this.props.name}</span>
-                <input type="checkbox" defaultChecked={this.props.isAllowed} onChange={() => { this.OnCheckboxHandler.call(this);  }}></input>
+                <input type="checkbox" checked={this.props.isAllowed} onChange={() => {}}></input>
             </div>
         )
     }
