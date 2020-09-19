@@ -11,7 +11,8 @@ import MyTime from './MyTime';
 class DB
 {
   constructor() {
-    this.GenerateTasks();
+    this.tasks = [];
+    //this.GenerateTasks();
   }
 
   /*************************************************************************** 
@@ -21,7 +22,7 @@ class DB
     this.tasks = [
     ];
 
-    for (let i = 0; i < 30; ++i){
+    for (let i = 0; i < 5; ++i){
       this.tasks.push({
         name: String(100 + i + " test"),
         desc: i,
@@ -51,9 +52,16 @@ class DB
       let task = this.tasks[i];
       task.time = GenerateTime();
       task.date = GenerateDate();
-      task.notified = false;
+      task.isNotified = false;
     }
 
+    const now = new Date();
+    for (let i = 0; i < 5; ++i) {
+      const m = new Date();
+      m.setMinutes(now.getMinutes() + i + 1);
+      const time = MyTime.DateToMyTime(m).slice(0, -3);
+      this.tasks.push({name: "Task " + (i + 1), desc: "", time: time, date: "19-09-2020"});
+    }
     
     for (let i = 0; i < this.tasks.length; ++i) {
       this.tasks[i].key = i;
@@ -111,22 +119,53 @@ class Logic {
       ]
     }
 
-    this.settings.items[0].isSupported = (Notification !== undefined);
+    this.RequestNotificationPermission = this.RequestNotificationPermission.bind(this);
+    this.RequestNotificationPermission();
+
     this.settings.items[1].isSupported = (Audio !== undefined);
-    console.log(this.settings.items);
 
     this.notification_interval = setInterval(() => {
-
+      this.db.SortTasks();
     }, 1000 * 5);
   }
 
-  OnSettingsChange(items) {
-    this.settings = {
-      isChanged: true,
-      items: [
-        ...items
-      ]
+  RequestNotificationPermission() {
+    const is_supported = Notification !== undefined;
+    this.settings.items[0].isSupported = is_supported;
+    if (is_supported) {
+      Notification.requestPermission()
+        .then(() => { this.settings.items[0].isAllowed = (Notification.permission === 'granted');} )
+        .catch(() => {this.settings.items[0].isAllowed = false;});
     }
+  }
+
+  ShowNotifications() {
+    if (this.settings.items[0].isSupported && this.settings.items[0].isAllowed) {
+      let task = this.db.tasks.find(task => (MyTime.MyDateAndMyTimeUntilNow(task.date, task.time).ms < 0) && (!task.isNotified));
+      if (task) {
+        let notification = new Notification(task.name, {
+          body: task.desc
+        });
+        notification.onclick = (e) => {
+          //TODO: GO to user's task or do nothing
+        }
+      } else { }
+    }
+
+    this.db.tasks.forEach(task => {
+      if (MyTime.MyDateAndMyTimeUntilNow(task.date, task.time).ms < 0) task.isNotified = true;
+    });
+    this.db.SortTasks();
+  }
+
+  OnSettingsChange(items) {
+    this.settings.isChanged = true;
+
+    if (!this.settings.items[0].isAllowed && items[0].isAllowed) {
+      this.RequestNotificationPermission();
+    }
+
+    this.settings.items[1].isAllowed = items[1].isAllowed;
   }
 }
 
@@ -135,6 +174,7 @@ class App extends React.Component {
     super();
 
     this.db = new DB();
+
     this.logic = new Logic(this.db);
 
     this.state = {};
@@ -158,11 +198,22 @@ class App extends React.Component {
     this.OnSettingsChange = this.OnSettingsChange.bind(this);
 
     this.state.screen_stack = [this.Screens.Inbox];
-    this.state.screen_stack.push(this.Screens.Settings);
+    //this.state.screen_stack.push(this.Screens.Settings);
 
     this.CurrentScreen = this.CurrentScreen.bind(this);
     this.PushScreen = this.PushScreen.bind(this);
     this.PopScreen = this.PopScreen.bind(this);
+  }
+
+  componentDidMount() {
+    this.notification_interval = setInterval(() => {
+      this.logic.ShowNotifications();
+      this.forceUpdate();
+    }, 1000 * 30);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.notification_interval);
   }
 
   InboxRemoveTaskHandler(task) {
@@ -233,15 +284,12 @@ class App extends React.Component {
       const cur_screen = this.CurrentScreen();
       if (cur_screen === this.Screens.Inbox) {
         return true;
-      } else if (cur_screen === this.Screens.Settings) {
-        return this.logic.settings.isChanged;
       }
     }
 
     const r_btn = {
       onClick: this.FooterRBtnHandler,
       isVisible: DisplayFooterRBtn.call(this),
-      isSettingsSave: this.CurrentScreen() === this.Screens.Settings && this.logic.settings.isChanged
     }
 
     return (

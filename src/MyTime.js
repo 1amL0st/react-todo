@@ -40,10 +40,11 @@ class MyTime {
 
     static MyDateAndMyTimeUntilNow(my_date, my_time) {
         const date = this.MyDateAndMyTimeToDate(my_date, my_time);
-        let ms = date - new Date();
+        const in_ms = date - new Date();
 
-        const sign = Math.sign(ms);
+        const sign = Math.sign(in_ms);
 
+        let ms = in_ms;
         ms = Math.abs(ms);
         const hours = Math.floor(ms / (3600 * 1000));
         ms -= hours * 3600 * 1000;
@@ -54,7 +55,7 @@ class MyTime {
         const seconds = Math.floor(ms / 1000);
 
         return {
-            ms: ms,
+            ms: in_ms,
             seconds: seconds * sign,
             minutes: minutes * sign,
             hours: hours * sign

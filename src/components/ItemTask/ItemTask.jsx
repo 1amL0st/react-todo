@@ -66,8 +66,7 @@ class ItemTask extends React.Component {
         const minutes_str = (time_left.minutes) ? time_left.minutes + " minutes" : "";
         
         let color = "#00FF00";
-        const minutes = time_left.minutes + time_left.hours * 60;
-        if (minutes < 0) {
+        if (time_left.ms < 0) {
             color = "#000000";
         } else {
             const green = (time_left.hours > 1) ? "A0" : "00" ;
