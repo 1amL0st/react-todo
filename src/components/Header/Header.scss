@@ -4,7 +4,7 @@
   padding: 32px;
 
   &--controls {
-    @include flex-layout(row, space-between);
+    @include flex-layout(row, flex-end);
   }
 
   &--time {

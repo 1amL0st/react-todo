@@ -30,7 +30,6 @@ class Header extends React.Component {
         return (
             <header className="header">
                 <div className="header--controls">
-                    <span className="button" title="Idk"><FontAwesomeIcon icon={icons.faList} /></span>
                     <span className="button" title="Settings"
                     onClick={() => {this.props.onSettingsBtnClick()}}><FontAwesomeIcon icon={icons.faCog} /></span>
                 </div>

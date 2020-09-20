@@ -12,7 +12,6 @@ class DB
 {
   constructor() {
     this.tasks = [];
-    //this.GenerateTasks();
   }
 
   /*************************************************************************** 
@@ -124,6 +123,8 @@ class Logic {
 
     this.settings.items[1].isSupported = (Audio !== undefined);
 
+    this.audio = new Audio("https://www.soundjay.com/clock/sounds/clock-winding-1.mp3");
+
     this.notification_interval = setInterval(() => {
       this.db.SortTasks();
     }, 1000 * 5);
@@ -143,13 +144,13 @@ class Logic {
     if (this.settings.items[0].isSupported && this.settings.items[0].isAllowed) {
       let task = this.db.tasks.find(task => (MyTime.MyDateAndMyTimeUntilNow(task.date, task.time).ms < 0) && (!task.isNotified));
       if (task) {
-        let notification = new Notification(task.name, {
+        new Notification(task.name, {
           body: task.desc
         });
-        notification.onclick = (e) => {
-          //TODO: GO to user's task or do nothing
+        if (this.settings.items[1].isAllowed) {
+          this.audio.play();
         }
-      } else { }
+      }
     }
 
     this.db.tasks.forEach(task => {
