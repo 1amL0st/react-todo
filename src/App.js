@@ -245,6 +245,8 @@ class App extends React.Component {
     if (this.CurrentScreen() !== this.Screens.Settings) {
       this.logic.settings.isChanged = false;
       this.PushScreen(this.Screens.Settings);
+    } else {
+      this.PopScreen();
     }
   }
 
